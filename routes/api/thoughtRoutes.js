@@ -105,9 +105,10 @@ router.post('/:thoughtId/reactions', async (req, res) => {
 router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
     try {
 
+        // Not the correct way since they wanted use to use reactionId instead of _id
         const removeReaction = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { reactions: { reactionId: req.params.reactionId }}},
+            { $pull: { reactions: { _id: req.params.reactionId }}},
             {new: true, runValidators: true}
         )
 
