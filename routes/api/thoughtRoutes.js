@@ -1,9 +1,16 @@
 const router = require('express').Router()
 // Require the models
+const { User, Thought } = require('../../models')
 
 // Routes for thoughts
-router.get('/', (req, res) => {
-    
+router.get('/', async (req, res) => {
+    try {
+
+
+    } catch (e) {
+        console.log(e)
+        res.status(500).json(e)
+    }
 })
 
 router.get('/:id', (req, res) => {
