@@ -1,8 +1,14 @@
-const { connect, connection } = require('mongoose')
+const mongoose = require('mongoose')
 
-connect('mongodb://localhost:27017/socialNetworkDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.DATABASE_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })    
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-module.exports = connection;
+module.exports = connectDB
