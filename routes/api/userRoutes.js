@@ -83,7 +83,16 @@ router.delete('/:id', async (req, res) => {
 router.post('/:userId/friends/:friendId', async (req, res) => {
     try {
 
+        const addFriend = await User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $addToSet: { friends: req.params.friendId }},
+            {new: true, runValidators: true}
+        )
 
+        res.status(200).json(addFriend)
+
+        // What about the other person. Shouldn't they be friend back?
+        // Or maybe this is a following type situation 
 
     } catch (e) {
         console.log(e)
@@ -94,7 +103,13 @@ router.post('/:userId/friends/:friendId', async (req, res) => {
 router.delete('/:userId/friends/:friendId', async (req, res) => {
     try {
 
+        const removeFriend = await User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $pull: { friends: req.params.friendId }},
+            {new: true, runValidators: true}
+        )
 
+        res.status(200).json(removeFriend)
 
     } catch (e) {
         console.log(e)
