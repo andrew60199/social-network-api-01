@@ -44,10 +44,7 @@ router.post('/new', async (req, res) => {
             {new: true, runValidators: true}
         )
 
-        console.log(thought)
-        console.log(addThoughtToUser)
-
-        res.status(201).json(thought)
+        res.status(201).json({ message: "Thought added!" })
 
     } catch (e) {
         console.log(e)
@@ -105,16 +102,16 @@ router.post('/:thoughtId/reactions', async (req, res) => {
     }    
 })
 
-router.delete('/:thoughtId/reactions', async (req, res) => {
+router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
     try {
 
-        const addReaction = await Thought.findOneAndUpdate(
+        const removeReaction = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { reactions: req.body }},
+            { $pull: { reactions: { reactionId: req.params.reactionId }}},
             {new: true, runValidators: true}
         )
-        
-        res.status(200).json(addReaction)
+
+        res.status(200).json(removeReaction)
 
     } catch (e) {
         console.log(e)
